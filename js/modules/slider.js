@@ -1,4 +1,4 @@
-function slider(nodeSlider) {
+const slider = (nodeSlider) => {
   console.log(nodeSlider)
 }
 
