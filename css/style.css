@@ -215,7 +215,7 @@ a {
 
 .slider__item {
   -webkit-backface-visibility: hidden;
-
+  
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
