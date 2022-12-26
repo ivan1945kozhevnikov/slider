@@ -8,13 +8,14 @@ const slider = (nodeSlider) => {
   const sliderList = nodeSlider.querySelector('.slider__list');
   const sliderItem = nodeSlider.querySelector('.goods__item');
   const sliderWidth = sliderItem.offsetWidth;
-  const sliderStyle = getComputedStyle(sliderList);
-  const startPosition = Number(sliderStyle.x.slice(0,1));
+  const style = getComputedStyle(sliderList);
+  const matrix = new WebKitCSSMatrix(style.transform);
+  const startPosition = matrix.m41;
 
-  const setCoordinate = (step, direction, start ) => {
-     const sliderCoordinate = step * direction* sliderWidth + start;
-     return sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
-   }
+  const setCoordinate = (step, direction, start) => {
+    const sliderCoordinate = step * direction * sliderWidth + start;
+    return sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
+  }
 
   backButton.addEventListener('click', () => {
     setCoordinate(STEP, BACK_DIRECTION, startPosition);
