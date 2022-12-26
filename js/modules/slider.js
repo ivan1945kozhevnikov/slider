@@ -1,7 +1,6 @@
 const STEP = 1;
 const FORWARD_DIRECTION = -1;
 const BACK_DIRECTION = 1;
-const START_POSITION = 0;
 
 const slider = (nodeSlider) => {
   const backButton = nodeSlider.querySelector('.slider__button--prev');
@@ -9,22 +8,24 @@ const slider = (nodeSlider) => {
   const sliderList = nodeSlider.querySelector('.slider__list');
   const sliderItem = nodeSlider.querySelector('.goods__item');
   const sliderWidth = sliderItem.offsetWidth;
+  const sliderStyle = getComputedStyle(sliderList);
+  const startPosition = Number(sliderStyle.x.slice(0,1));
 
-  const setCoordinate = (step, direction, position) => {
-     const sliderCoordinate = `${step * direction * sliderWidth + position * direction}px`;
-     return sliderList.style.transform += `translateX(${sliderCoordinate})`;
-  }
+  const setCoordinate = (step, direction, start ) => {
+     const sliderCoordinate = step * direction* sliderWidth + start;
+     return sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
+   }
 
   backButton.addEventListener('click', () => {
-    setCoordinate(STEP, BACK_DIRECTION, START_POSITION);
+    setCoordinate(STEP, BACK_DIRECTION, startPosition);
   })
   nextButton.addEventListener('click', () => {
-    setCoordinate(STEP, FORWARD_DIRECTION, START_POSITION);
+    setCoordinate(STEP, FORWARD_DIRECTION, startPosition);
   })
   sliderList.addEventListener('transitionstart', () => {
-    backButton.setAttribute('disabled', 'disabled')
+    backButton.setAttribute('disabled', '')
     backButton.classList.add('slider__button--disabled')
-    nextButton.setAttribute('disabled', 'disabled')
+    nextButton.setAttribute('disabled', '')
     nextButton.classList.add('slider__button--disabled')
   })
   sliderList.addEventListener('transitionend', () => {
