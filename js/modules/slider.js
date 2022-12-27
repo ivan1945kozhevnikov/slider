@@ -15,8 +15,6 @@ const slider = (nodeSlider) => {
   const setCoordinate = (step, direction, start) => {
     const sliderCoordinate = step * direction * sliderWidth + start;
     sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
-    const position = startPosition + sliderCoordinate;
-    return position;
   }
 
   backButton.addEventListener('click', () => {
