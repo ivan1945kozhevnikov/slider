@@ -1,6 +1,8 @@
+import { getTranslateX } from '../utils/getTranslateX.js'
 const STEP = 1;
 const FORWARD_DIRECTION = -1;
 const BACK_DIRECTION = 1;
+const START_POSITION = getTranslateX();
 
 const slider = (nodeSlider) => {
   const backButton = nodeSlider.querySelector('.slider__button--prev');
@@ -8,20 +10,18 @@ const slider = (nodeSlider) => {
   const sliderList = nodeSlider.querySelector('.slider__list');
   const sliderItem = nodeSlider.querySelector('.goods__item');
   const sliderWidth = sliderItem.offsetWidth;
-  const style = getComputedStyle(sliderList);
-  const matrix = new WebKitCSSMatrix(style.transform);
-  const startPosition = matrix.m41;
 
   const setCoordinate = (step, direction, start) => {
     const sliderCoordinate = step * direction * sliderWidth + start;
-    return sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
+    sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
+    return sliderList.style.transform
   }
 
   backButton.addEventListener('click', () => {
-    setCoordinate(STEP, BACK_DIRECTION, startPosition);
+    setCoordinate(STEP, BACK_DIRECTION, START_POSITION);
   })
   nextButton.addEventListener('click', () => {
-    setCoordinate(STEP, FORWARD_DIRECTION, startPosition);
+    setCoordinate(STEP, FORWARD_DIRECTION, START_POSITION);
   })
   sliderList.addEventListener('transitionstart', () => {
     backButton.setAttribute('disabled', '')
