@@ -1,9 +1,8 @@
-const sliderList = document.querySelector('.slider__list');
-const getTranslateX = () => {
-  const style = window.getComputedStyle(sliderList);
+const getTranslateX = (nodeSlider) => {
+  const sliderList = nodeSlider.querySelector('.slider__list');
+  const style = getComputedStyle(sliderList);
   const matrix = new WebKitCSSMatrix(style.transform);
-  const start = matrix.m41;
-  return start
+  return matrix.m41;
 }
 
 export { getTranslateX }

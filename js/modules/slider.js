@@ -2,7 +2,7 @@ import { getTranslateX } from '../utils/getTranslateX.js'
 const STEP = 1;
 const FORWARD_DIRECTION = -1;
 const BACK_DIRECTION = 1;
-const START_POSITION = getTranslateX();
+
 
 const slider = (nodeSlider) => {
   const backButton = nodeSlider.querySelector('.slider__button--prev');
@@ -10,18 +10,20 @@ const slider = (nodeSlider) => {
   const sliderList = nodeSlider.querySelector('.slider__list');
   const sliderItem = nodeSlider.querySelector('.goods__item');
   const sliderWidth = sliderItem.offsetWidth;
+  const startPosition = getTranslateX(nodeSlider);
 
   const setCoordinate = (step, direction, start) => {
     const sliderCoordinate = step * direction * sliderWidth + start;
     sliderList.style.transform += `translateX(${sliderCoordinate}px)`;
-    return sliderList.style.transform
+    const position = startPosition + sliderCoordinate;
+    return position;
   }
 
   backButton.addEventListener('click', () => {
-    setCoordinate(STEP, BACK_DIRECTION, START_POSITION);
+    setCoordinate(STEP, BACK_DIRECTION, startPosition);
   })
   nextButton.addEventListener('click', () => {
-    setCoordinate(STEP, FORWARD_DIRECTION, START_POSITION);
+    setCoordinate(STEP, FORWARD_DIRECTION, startPosition);
   })
   sliderList.addEventListener('transitionstart', () => {
     backButton.setAttribute('disabled', '')
