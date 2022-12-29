@@ -1,25 +1,44 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
-const STEP = 1;  //шаг перелистования
-const FORWARD_DIRECTION = -1;  //направление вперед
-const BACK_DIRECTION = 1; //направление назад
-const SLIDES_PAGE = 5;  //кол-во слайдов на странице
+//шаг пролистывания
+const STEP = 1;
+//направление вперед
+const FORWARD_DIRECTION = -1;
+//направление назад
+const BACK_DIRECTION = 1;
+//кол-во слайдов на странице
+const SLIDES_PAGE = 5;
 
 const slider = (nodeSlider) => {
-  const backButton = nodeSlider.querySelector('.slider__button--prev'); //кнопка назад
-  const nextButton = nodeSlider.querySelector('.slider__button--next'); //кнопка вперед
-  const sliderList = nodeSlider.querySelector('.slider__list'); //список слайдов
-  const sliderItem = nodeSlider.querySelector('.goods__item');  //слайд
-  const sliderItems = nodeSlider.querySelectorAll('.goods__item');  //массив слайдов
-  const sliderWidth = sliderItem.offsetWidth; //ширина слайда
-  const slidesWidth = sliderWidth * sliderItems.length; //ширина всех слайдов
-  const startPosition = getTranslateX(nodeSlider);  //стартовая позиция
-  const width = sliderWidth * SLIDES_PAGE;  //ширина слайдов на странице
-  const maxPosition = -(slidesWidth - width);  //максимальная позиция
-  const stepWidth = sliderWidth * STEP; //ширина пролистования
-  const stepWidthBefor = maxPosition + sliderWidth; //ширина пролистования до предпоследнего слайда
-  const stepWidthAfter = startPosition - sliderWidth;  //ширина пролистования до 2-ого слайда
-  const minPosition = startPosition;  //минимальная позиция
-  let currentPosition = startPosition;  //текущая позиция
+  //кнопка назад
+  const backButton = nodeSlider.querySelector('.slider__button--prev');
+  //кнопка вперед
+  const nextButton = nodeSlider.querySelector('.slider__button--next');
+  //список слайдов
+  const sliderList = nodeSlider.querySelector('.slider__list');
+  //слайд
+  const sliderItem = nodeSlider.querySelector('.goods__item');
+  //массив слайдов
+  const sliderItems = nodeSlider.querySelectorAll('.goods__item');
+  //ширина слайда
+  const sliderWidth = sliderItem.offsetWidth;
+  //ширина всех слайдов
+  const slidesWidth = sliderWidth * sliderItems.length;
+  //стартовая позиция
+  const startPosition = getTranslateX(nodeSlider);
+  //ширина слайдов на странице
+  const widthSlidesPage = sliderWidth * SLIDES_PAGE;
+  //максимальная позиция
+  const maxPosition = -(slidesWidth - widthSlidesPage);
+  //ширина одного шага пролистывания
+  const stepWidth = sliderWidth * STEP;
+  //позиция после первого пролистывания назад
+  const positionAfter1SwipeBack = maxPosition + sliderWidth;
+  //позиция после первого пролистывания вперед
+  const positionAfter1SwipeForwaard = startPosition - sliderWidth;
+  //минимальная позиция
+  const minPosition = startPosition;
+  //текущая позиция
+  let currentPosition = startPosition;
 
   const setCoordinate = (current) => {
     sliderList.style.transform = `translateX(${current}px)`;
@@ -29,20 +48,22 @@ const slider = (nodeSlider) => {
     currentPosition += stepWidth;
     if (currentPosition === minPosition) {
       backButton.classList.add('slider__button--hidden');
-    } if (currentPosition === stepWidthBefor) {
+    } if (currentPosition === positionAfter1SwipeBack) {
        nextButton.classList.remove('slider__button--hidden');
      }
     setCoordinate(currentPosition);
   })
+
   nextButton.addEventListener('click', () => {
     currentPosition -= stepWidth;
     if (currentPosition === maxPosition) {
       nextButton.classList.add('slider__button--hidden');
-    } if (currentPosition === stepWidthAfter) {
+    } if (currentPosition === positionAfter1SwipeForwaard) {
       backButton.classList.remove('slider__button--hidden');
     }
     setCoordinate(currentPosition);
   })
+  
   sliderList.addEventListener('transitionstart', () => {
     backButton.setAttribute('disabled', '');
     backButton.classList.add('slider__button--disabled');
