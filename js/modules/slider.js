@@ -32,9 +32,9 @@ const slider = (nodeSlider) => {
   //ширина одного шага пролистывания
   const stepWidth = sliderWidth * STEP;
   //позиция после первого пролистывания назад
-  const positionAfter1SwipeBack = maxPosition + sliderWidth;
+  const positionFirstScrollBack = maxPosition + sliderWidth;
   //позиция после первого пролистывания вперед
-  const positionAfter1SwipeForwaard = startPosition - sliderWidth;
+  const positionFirstScrollForward = startPosition - sliderWidth;
   //минимальная позиция
   const minPosition = startPosition;
   //текущая позиция
@@ -48,7 +48,7 @@ const slider = (nodeSlider) => {
     currentPosition += stepWidth;
     if (currentPosition === minPosition) {
       backButton.classList.add('slider__button--hidden');
-    } if (currentPosition === positionAfter1SwipeBack) {
+    } if (currentPosition === positionFirstScrollBack) {
        nextButton.classList.remove('slider__button--hidden');
      }
     setCoordinate(currentPosition);
@@ -58,12 +58,12 @@ const slider = (nodeSlider) => {
     currentPosition -= stepWidth;
     if (currentPosition === maxPosition) {
       nextButton.classList.add('slider__button--hidden');
-    } if (currentPosition === positionAfter1SwipeForwaard) {
+    } if (currentPosition === positionFirstScrollForward) {
       backButton.classList.remove('slider__button--hidden');
     }
     setCoordinate(currentPosition);
   })
-  
+
   sliderList.addEventListener('transitionstart', () => {
     backButton.setAttribute('disabled', '');
     backButton.classList.add('slider__button--disabled');
