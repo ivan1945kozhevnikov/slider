@@ -1,8 +1,15 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
+
+//шаг пролистывания
+const STEP = 1;
+//направление вперед
+const FORWARD_DIRECTION = -1;
+//направление назад
+const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider, step = 1) => {
+const slider = (nodeSlider, { mode, step = 1 }) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
@@ -38,23 +45,28 @@ const slider = (nodeSlider, step = 1) => {
     sliderList.style.transform = `translateX(${current}px)`;
   }
 
+  const setPosition = (direction) => {
+    currentPosition += direction * stepWidth;
+    return currentPosition;
+  }
+
   backButton.addEventListener('click', () => {
-    currentPosition += stepWidth;
     if (currentPosition === minPosition) {
       backButton.classList.add('slider__button--hidden');
     } if (currentPosition === positionFirstScrollBack) {
        nextButton.classList.remove('slider__button--hidden');
      }
+    setPosition(BACK_DIRECTION);
     setCoordinate(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
-    currentPosition -= stepWidth;
     if (currentPosition === maxPosition) {
       nextButton.classList.add('slider__button--hidden');
     } if (currentPosition === positionFirstScrollForward) {
       backButton.classList.remove('slider__button--hidden');
     }
+    setPosition(FORWARD_DIRECTION);
     setCoordinate(currentPosition);
   })
 

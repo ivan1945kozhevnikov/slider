@@ -1,6 +1,7 @@
 import { slider } from './modules/slider.js'
-const parameter = {
+
+const settings = {
   step : 1,
 }
 const nodeSlider = document.querySelector('.slider');
-slider(nodeSlider, parameter.step);
+slider(nodeSlider, settings);
