@@ -1,14 +1,8 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
-//шаг пролистывания
-const STEP = 1;
-//направление вперед
-const FORWARD_DIRECTION = -1;
-//направление назад
-const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider) => {
+const slider = (nodeSlider, step = 1) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
@@ -30,7 +24,7 @@ const slider = (nodeSlider) => {
   //максимальная позиция
   const maxPosition = -(slidesWidth - widthSlidesPage);
   //ширина одного шага пролистывания
-  const stepWidth = sliderWidth * STEP;
+  const stepWidth = sliderWidth * step;
   //позиция после первого пролистывания назад
   const positionFirstScrollBack = maxPosition + sliderWidth;
   //позиция после первого пролистывания вперед
