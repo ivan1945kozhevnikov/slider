@@ -1,7 +1,7 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
 
-//значение шага перелистывания по умолчанию
-const DEFAULT_STEP = {step : 1}
+//настройка слайдера по умолчанию
+const DEFAULT_SETTING = {step : 1}
 //направление вперед
 const FORWARD_DIRECTION = -1;
 //направление назад
@@ -9,7 +9,7 @@ const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider, {step} = DEFAULT_STEP) => {
+const slider = (nodeSlider, {step} = DEFAULT_SETTING) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
