@@ -33,9 +33,9 @@ const slider = (nodeSlider, {step} = DEFAULT_SETTING) => {
   //ширина одного шага пролистывания
   const stepWidth = sliderWidth * step;
   //позиция после первого пролистывания назад
-  const positionFirstScrollBack = maxPosition + sliderWidth;
+  const positionFirstScrollBack = maxPosition + stepWidth;
   //позиция после первого пролистывания вперед
-  const positionFirstScrollForward = startPosition - sliderWidth;
+  const positionFirstScrollForward = startPosition - stepWidth;
   //минимальная позиция
   const minPosition = startPosition;
   //текущая позиция
@@ -51,22 +51,26 @@ const slider = (nodeSlider, {step} = DEFAULT_SETTING) => {
 
   backButton.addEventListener('click', () => {
     currentPosition += calculatePosition(BACK_DIRECTION)
+    if (currentPosition === positionFirstScrollBack) {
+      nextButton.classList.remove('slider__button--hidden');
+    }
+    if (currentPosition >= minPosition ) {
+      currentPosition = minPosition
+      backButton.classList.add('slider__button--hidden')
+    }
     setPosition(currentPosition);
-    if (currentPosition === minPosition) {
-      backButton.classList.add('slider__button--hidden');
-    } if (currentPosition === positionFirstScrollBack) {
-       nextButton.classList.remove('slider__button--hidden');
-     }
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    setPosition(currentPosition);
-    if (currentPosition === maxPosition) {
+    if (currentPosition <= maxPosition ) {
+      currentPosition = maxPosition
       nextButton.classList.add('slider__button--hidden');
-    } if (currentPosition === positionFirstScrollForward) {
+    }
+    if (currentPosition === positionFirstScrollForward) {
       backButton.classList.remove('slider__button--hidden');
     }
+    setPosition(currentPosition);
   })
 
   sliderList.addEventListener('transitionstart', () => {
