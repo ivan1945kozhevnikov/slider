@@ -1,7 +1,7 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
 
 //настройка слайдера по умолчанию
-const DEFAULT_SETTING = {step : 1, infinite : false,}
+const DEFAULT_SETTING = {step : 1, infinite : false}
 //направление вперед
 const FORWARD_DIRECTION = -1;
 //направление назад
@@ -9,7 +9,7 @@ const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider, {step, infinite} = DEFAULT_SETTING) => {
+const slider = (nodeSlider, {step,} = DEFAULT_SETTING) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
@@ -49,35 +49,36 @@ const slider = (nodeSlider, {step, infinite} = DEFAULT_SETTING) => {
     return direction * stepWidth;
   }
 
-  if (!infinite && currentPosition === startPosition) {
-    backButton.classList.add('slider__button--hidden')
+  if (!DEFAULT_SETTING.infinite) {
+    backButton.classList.add('slider__button--hidden');
+  }
+
+  const isInfinite = (infinite) => {
+    if (!infinite && currentPosition === positionFirstScrollBack) {
+      nextButton.classList.remove('slider__button--hidden');
+    }
+    if (!infinite && currentPosition >= minPosition) {
+      currentPosition = minPosition
+      backButton.classList.add('slider__button--hidden');
+    }
+    if (!infinite && currentPosition <= maxPosition ) {
+      currentPosition = maxPosition
+      nextButton.classList.add('slider__button--hidden');
+    }
+    if (!infinite && currentPosition === positionFirstScrollForward) {
+      backButton.classList.remove('slider__button--hidden');
+    }
   }
 
   backButton.addEventListener('click', () => {
-    currentPosition += calculatePosition(BACK_DIRECTION)
-    if (!infinite) {
-      if (currentPosition === positionFirstScrollBack) {
-      nextButton.classList.remove('slider__button--hidden');
-      }
-      if (currentPosition >= minPosition ) {
-      currentPosition = minPosition
-      backButton.classList.add('slider__button--hidden')
-      }
-    }
+    currentPosition += calculatePosition(BACK_DIRECTION);
+    isInfinite(DEFAULT_SETTING.infinite);
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    if (!infinite) {
-      if (currentPosition <= maxPosition ) {
-      currentPosition = maxPosition
-      nextButton.classList.add('slider__button--hidden');
-      }
-      if (currentPosition === positionFirstScrollForward) {
-      backButton.classList.remove('slider__button--hidden');
-      }
-    }
+    isInfinite(DEFAULT_SETTING.infinite);
     setPosition(currentPosition);
   })
 
