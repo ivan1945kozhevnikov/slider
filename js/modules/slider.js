@@ -1,7 +1,7 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
 
 //настройка слайдера по умолчанию
-const DEFAULT_SETTING = {step : 1,}
+const DEFAULT_SETTING = {step : 1, infinite : false};
 //направление вперед
 const FORWARD_DIRECTION = -1;
 //направление назад
@@ -53,35 +53,32 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
     backButton.classList.add('slider__button--hidden');
   }
 
-  const setClassBackButton = (className = 'slider__button--hidden') => {
+  const setClass = (className) => {
     if (!infinite && currentPosition === positionFirstScrollBack) {
-      nextButton.classList.remove(className);
+      nextButton.classList.toggle(className);
     }
     if (!infinite && currentPosition >= minPosition) {
       currentPosition = minPosition;
-      backButton.classList.add(className);
+      backButton.classList.toggle(className);
     }
-  }
-
-  const setClassNextButton = (className = 'slider__button--hidden') => {
     if (!infinite && currentPosition === positionFirstScrollForward) {
-      backButton.classList.remove(className);
+      backButton.classList.toggle(className);
     }
     if (!infinite && currentPosition <= maxPosition ) {
       currentPosition = maxPosition
-      nextButton.classList.add(className);
+      nextButton.classList.toggle(className);
     }
   }
 
   backButton.addEventListener('click', () => {
     currentPosition += calculatePosition(BACK_DIRECTION);
-    setClassBackButton();
+    setClass('slider__button--hidden');
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    setClassNextButton();
+    setClass('slider__button--hidden');
     setPosition(currentPosition);
   })
 
