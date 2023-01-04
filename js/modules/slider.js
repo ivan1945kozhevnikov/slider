@@ -49,34 +49,44 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
     return direction * stepWidth;
   }
 
-  const toggleHidingClass = (buttonName) => {
-    buttonName.classList.toggle('slider__button--hidden');
+  const toggleControlVisibility = (control) => {
+    control.classList.toggle('slider__button--hidden');
   }
-
+  //если infinite = false, тогда переключает видимость кнопки назад
   if (!infinite) {
-    toggleHidingClass(backButton);
+    toggleControlVisibility(backButton);
   }
 
   backButton.addEventListener('click', () => {
     currentPosition += calculatePosition(BACK_DIRECTION);
-    if (!infinite && currentPosition === positionFirstScrollBack) {
-      toggleHidingClass(nextButton)
-    }
-    if (!infinite && currentPosition >= minPosition) {
-      currentPosition = minPosition;
-      toggleHidingClass(backButton)
+    //если infinite = false
+    if (!infinite) {
+      //если currentPosition = positionFirstScrollBack, тогда переключает видимость кнопки вперед
+      if(currentPosition === positionFirstScrollBack) {
+        toggleControlVisibility(nextButton);
+      }
+      //если currentPosition >= minPosition, тогда currentPosition = minPosition и переключает видимость кнопки вперед
+      if (currentPosition >= minPosition) {
+        currentPosition = minPosition;
+        toggleControlVisibility(backButton);
+      }
     }
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    if (!infinite && currentPosition === positionFirstScrollForward) {
-      toggleHidingClass(backButton)
-    }
-    if (!infinite && currentPosition <= maxPosition ) {
-      currentPosition = maxPosition
-      toggleHidingClass(nextButton)
+     //если infinite = false
+    if (!infinite) {
+      //если currentPosition = positionFirstScrollForward, тогда переключает видимость кнопки назад
+      if (currentPosition === positionFirstScrollForward) {
+        toggleControlVisibility(backButton);
+      }
+      //если currentPosition <= maxPosition, тогда currentPosition = maxPosition и переключает видимость кнопки вперед
+      if (currentPosition <= maxPosition ) {
+        currentPosition = maxPosition;
+        toggleControlVisibility(nextButton);
+      }
     }
     setPosition(currentPosition);
   })
