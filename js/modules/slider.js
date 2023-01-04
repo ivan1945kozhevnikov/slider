@@ -1,7 +1,7 @@
 import { getTranslateX } from '../utils/getTranslateX.js'
 
 //настройка слайдера по умолчанию
-const DEFAULT_SETTING = {step : 1}
+const DEFAULT_SETTING = {step : 1, infinite : false};
 //направление вперед
 const FORWARD_DIRECTION = -1;
 //направление назад
@@ -9,7 +9,7 @@ const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider, {step} = DEFAULT_SETTING) => {
+const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
@@ -49,26 +49,44 @@ const slider = (nodeSlider, {step} = DEFAULT_SETTING) => {
     return direction * stepWidth;
   }
 
+  const toggleControlVisibility = (control) => {
+    control.classList.toggle('slider__button--hidden');
+  }
+  //если infinite = false, тогда переключает видимость кнопки назад
+  if (!infinite) {
+    toggleControlVisibility(backButton);
+  }
+
   backButton.addEventListener('click', () => {
-    currentPosition += calculatePosition(BACK_DIRECTION)
-    if (currentPosition === positionFirstScrollBack) {
-      nextButton.classList.remove('slider__button--hidden');
-    }
-    if (currentPosition >= minPosition ) {
-      currentPosition = minPosition
-      backButton.classList.add('slider__button--hidden')
+    currentPosition += calculatePosition(BACK_DIRECTION);
+    //если infinite = false
+    if (!infinite) {
+      //если currentPosition = positionFirstScrollBack, тогда переключает видимость кнопки вперед
+      if(currentPosition === positionFirstScrollBack) {
+        toggleControlVisibility(nextButton);
+      }
+      //если currentPosition >= minPosition, тогда currentPosition = minPosition и переключает видимость кнопки вперед
+      if (currentPosition >= minPosition) {
+        currentPosition = minPosition;
+        toggleControlVisibility(backButton);
+      }
     }
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    if (currentPosition <= maxPosition ) {
-      currentPosition = maxPosition
-      nextButton.classList.add('slider__button--hidden');
-    }
-    if (currentPosition === positionFirstScrollForward) {
-      backButton.classList.remove('slider__button--hidden');
+     //если infinite = false
+    if (!infinite) {
+      //если currentPosition = positionFirstScrollForward, тогда переключает видимость кнопки назад
+      if (currentPosition === positionFirstScrollForward) {
+        toggleControlVisibility(backButton);
+      }
+      //если currentPosition <= maxPosition, тогда currentPosition = maxPosition и переключает видимость кнопки вперед
+      if (currentPosition <= maxPosition ) {
+        currentPosition = maxPosition;
+        toggleControlVisibility(nextButton);
+      }
     }
     setPosition(currentPosition);
   })
