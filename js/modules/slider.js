@@ -49,36 +49,35 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
     return direction * stepWidth;
   }
 
-  if (!infinite) {
-    backButton.classList.add('slider__button--hidden');
+  const toggleHidingClass = (buttonName) => {
+    buttonName.classList.toggle('slider__button--hidden');
   }
 
-  const setClass = (className) => {
-    if (!infinite && currentPosition === positionFirstScrollBack) {
-      nextButton.classList.toggle(className);
-    }
-    if (!infinite && currentPosition >= minPosition) {
-      currentPosition = minPosition;
-      backButton.classList.toggle(className);
-    }
-    if (!infinite && currentPosition === positionFirstScrollForward) {
-      backButton.classList.toggle(className);
-    }
-    if (!infinite && currentPosition <= maxPosition ) {
-      currentPosition = maxPosition
-      nextButton.classList.toggle(className);
-    }
+  if (!infinite) {
+    toggleHidingClass(backButton);
   }
 
   backButton.addEventListener('click', () => {
     currentPosition += calculatePosition(BACK_DIRECTION);
-    setClass('slider__button--hidden');
+    if (!infinite && currentPosition === positionFirstScrollBack) {
+      toggleHidingClass(nextButton)
+    }
+    if (!infinite && currentPosition >= minPosition) {
+      currentPosition = minPosition;
+      toggleHidingClass(backButton)
+    }
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
     currentPosition += calculatePosition(FORWARD_DIRECTION);
-    setClass('slider__button--hidden');
+    if (!infinite && currentPosition === positionFirstScrollForward) {
+      toggleHidingClass(backButton)
+    }
+    if (!infinite && currentPosition <= maxPosition ) {
+      currentPosition = maxPosition
+      toggleHidingClass(nextButton)
+    }
     setPosition(currentPosition);
   })
 
