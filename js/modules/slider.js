@@ -9,7 +9,7 @@ const BACK_DIRECTION = 1;
 //кол-во слайдов на странице
 const SLIDES_PAGE = 5;
 
-const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
+const slider = (nodeSlider, {step = 1, infinite = true} = DEFAULT_SETTING) => {
   //кнопка назад
   const backButton = nodeSlider.querySelector('.slider__button--prev');
   //кнопка вперед
@@ -40,6 +40,7 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
   const minPosition = startPosition;
   //текущая позиция
   let currentPosition = startPosition;
+  const arr = Array.from(sliderItems);
 
   const setPosition = (current) => {
     sliderList.style.transform = `translateX(${current}px)`;
@@ -71,24 +72,51 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
         toggleControlVisibility(backButton);
       }
     }
+    console.log(currentPosition)
     setPosition(currentPosition);
   })
 
   nextButton.addEventListener('click', () => {
-    currentPosition += calculatePosition(FORWARD_DIRECTION);
-     //если infinite = false
+ //если infinite = false
     if (!infinite) {
+      currentPosition += calculatePosition(FORWARD_DIRECTION);
+      setPosition(currentPosition);
       //если currentPosition = positionFirstScrollForward, тогда переключает видимость кнопки назад
       if (currentPosition === positionFirstScrollForward) {
         toggleControlVisibility(backButton);
       }
       //если currentPosition <= maxPosition, тогда currentPosition = maxPosition и переключает видимость кнопки вперед
-      if (currentPosition <= maxPosition ) {
+      if (currentPosition <= maxPosition) {
         currentPosition = maxPosition;
         toggleControlVisibility(nextButton);
       }
     }
-    setPosition(currentPosition);
+    if (infinite) {
+      console.log(currentPosition)
+      currentPosition += calculatePosition(FORWARD_DIRECTION);
+      console.log(currentPosition)
+      setPosition(currentPosition);
+      // const newArr = arr.slice(0, step);
+      // for (let i = 0; i < newArr.length; i+=1){
+      //   sliderList.removeChild(newArr[i]);
+      //   sliderList.appendChild(newArr[i]);
+      // }
+      setTimeout(()=>{
+      currentPosition =0;
+      setPosition(currentPosition);
+      }, 10000)
+    }
+    // if (infinite) {
+    //   currentPosition += calculatePosition(FORWARD_DIRECTION);
+    //   setPosition(currentPosition);
+    //   const removeArr = arr.slice(0, step);
+    //   for (let i = 0; i < removeArr.length; i+=1){
+    //     sliderList.removeChild(removeArr[i]);
+    //     sliderList.appendChild(removeArr[i]);
+    //   }
+    //   currentPosition = 0;
+    //   setPosition(currentPosition);
+    // }
   })
 
   sliderList.addEventListener('transitionstart', () => {
@@ -96,12 +124,14 @@ const slider = (nodeSlider, {step = 1, infinite = false} = DEFAULT_SETTING) => {
     backButton.classList.add('slider__button--disabled');
     nextButton.setAttribute('disabled', '');
     nextButton.classList.add('slider__button--disabled');
+    console.log(currentPosition)
   })
   sliderList.addEventListener('transitionend', () => {
     backButton.removeAttribute('disabled');
     backButton.classList.remove('slider__button--disabled');
     nextButton.removeAttribute('disabled');
     nextButton.classList.remove('slider__button--disabled');
+    console.log(currentPosition)
   })
 }
 
