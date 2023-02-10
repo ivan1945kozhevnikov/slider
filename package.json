@@ -1,16 +1,34 @@
 {
+  "name": "slider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./js",
+    "lint:fix": "eslint ./js --fix --color"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan1945kozhevnikov/slider.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivan1945kozhevnikov/slider/issues"
+  },
+  "homepage": "https://github.com/ivan1945kozhevnikov/slider#readme",
   "devDependencies": {
     "eslint": "^8.33.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.1",
-    "prettier": "^2.8.3"
-  },
-  "dependencies": {
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-import": "^2.27.5"
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.1",
+    "prettier": "^2.8.4"
   },
-  "husky":{
+  "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
@@ -20,9 +38,5 @@
       "npm run lint:fix",
       "git add"
     ]
-  },
-  "scripts": {
-    "test": "eslint ./js --color",
-    "lint:fix": "eslint ./js --fix"
   }
 }

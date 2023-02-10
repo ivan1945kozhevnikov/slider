@@ -1,12 +1,11 @@
 {
-  "extends": [
-    "airbnb-base",
-    "prettier"
-  ],
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true
   },
+  "extends": ["airbnb/base", "prettier"],
   "rules": {
+    "max-len":"off",
     "import/extensions": [
       "error",
       "ignorePackages",

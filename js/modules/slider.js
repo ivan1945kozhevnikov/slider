@@ -41,13 +41,13 @@ const slider = (nodeSlider, { step = 1, infinite = false } = DEFAULT_SETTING) =>
   // текущая позиция
   let currentPosition = startPosition;
 
-  const setPosition = current => {
+  const setPosition = (current) => {
     sliderList.style.transform = `translateX(${current}px)`;
   };
 
-  const calculatePosition = direction => direction * stepWidth;
+  const calculatePosition = (direction) => direction * stepWidth;
 
-  const toggleControlVisibility = control => {
+  const toggleControlVisibility = (control) => {
     control.classList.toggle('slider__button--hidden');
   };
   // если infinite = false, тогда переключает видимость кнопки назад
