@@ -1,0 +1,28 @@
+{
+  "name": "slider",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ./js",
+    "lint:fix": "eslint ./js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan1945kozhevnikov/slider.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivan1945kozhevnikov/slider/issues"
+  },
+  "homepage": "https://github.com/ivan1945kozhevnikov/slider#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1"
+  }
+}
