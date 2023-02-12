@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prettier:write": "npx prettier -w js",
+    "eslint:fix": "eslint ./js --fix"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/ivan1945kozhevnikov/slider/issues"
   },
-  "homepage": "https://github.com/ivan1945kozhevnikov/slider#readme"
+  "homepage": "https://github.com/ivan1945kozhevnikov/slider#readme",
+  "devDependencies": {
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "2.8.4"
+  }
 }
