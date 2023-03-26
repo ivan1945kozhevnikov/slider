@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "format": "prettier -w ./src",
-        "lint": "eslint ./src",
-        "lint:fix": "eslint ./src --fix",
+        "format": "prettier -w",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
         "prepare": "husky install"
     },
     "lint-staged": {
