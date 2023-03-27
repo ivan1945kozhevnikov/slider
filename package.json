@@ -1,0 +1,35 @@
+{
+    "name": "slider",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "format": "prettier -w",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
+        "prepare": "husky install"
+    },
+    "lint-staged": {
+        "*.js": "npm run lint:fix"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ivan1945kozhevnikov/slider.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ivan1945kozhevnikov/slider/issues"
+    },
+    "homepage": "https://github.com/ivan1945kozhevnikov/slider#readme",
+    "devDependencies": {
+        "eslint": "^8.36.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.7.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.3",
+        "prettier": "2.8.4"
+    }
+}
